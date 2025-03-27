@@ -27,7 +27,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
 
 COPY --from=ghcr.io/ublue-os/akmods:main-41 /rpms/ /tmp/rpms
 RUN find /tmp/rpms
-RUN rpm-ostree install /tmp/rpms/kmods/wl*.rpm
+RUN rpm-ostree install /tmp/rpms/kmods/kmod-wl*.rpm
     
 ### LINTING
 ## Verify final image and contents are correct.
