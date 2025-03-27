@@ -24,6 +24,10 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=tmpfs,dst=/tmp \
     /ctx/build.sh && \
     ostree container commit
+
+COPY --from=ghcr.io/ublue-os/akmods:main-41 /rpms/ /tmp/rpms
+RUN find /tmp/rpms
+RUN rpm-ostree install /tmp/rpms/kmods/wl*.rpm
     
 ### LINTING
 ## Verify final image and contents are correct.
