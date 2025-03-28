@@ -3,7 +3,7 @@ FROM scratch AS ctx
 COPY build_files /
 
 # Base Image
-FROM ghcr.io/ublue-os/bluefin:latest
+FROM ghcr.io/ublue-os/bluefin:stable
 
 ## Other possible base images include:
 # FROM ghcr.io/ublue-os/bazzite:latest
@@ -28,9 +28,11 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     
 RUN sed -i 's@enabled=0@enabled=1@g' /etc/yum.repos.d/_copr_ublue-os-akmods.repo
 
-COPY --from=ghcr.io/ublue-os/akmods:main-41-6.13.8-200.fc41.x86_64 /rpms/ /tmp/rpms
-RUN find /tmp/rpms
-RUN rpm-ostree install /tmp/rpms/kmods/*wl*.rpm
+RUN rpm-ostree install kmod-wl
+
+# COPY --from=ghcr.io/ublue-os/akmods:main-41-6.13.8-200.fc41.x86_64 /rpms/ /tmp/rpms
+# RUN find /tmp/rpms
+# RUN rpm-ostree install /tmp/rpms/kmods/*wl*.rpm
     
 ### LINTING
 ## Verify final image and contents are correct.
