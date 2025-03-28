@@ -3,7 +3,7 @@ FROM scratch AS ctx
 COPY build_files /
 
 # Base Image
-FROM ghcr.io/ublue-os/bluefin:stable
+FROM ghcr.io/ublue-os/bluefin:latest
 
 ## Other possible base images include:
 # FROM ghcr.io/ublue-os/bazzite:latest
@@ -25,7 +25,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     /ctx/build.sh && \
     ostree container commit
 
-COPY --from=ghcr.io/ublue-os/akmods:main-40 /rpms/ /tmp/rpms
+COPY --from=ghcr.io/ublue-os/akmods:main-41 /rpms/ /tmp/rpms
 RUN find /tmp/rpms
 RUN rpm-ostree install /tmp/rpms/kmods/*wl*.rpm
     
