@@ -5,7 +5,7 @@ FROM scratch AS ctx
 COPY build_files /
 
 # Base Image
-FROM ghcr.io/ublue-os/bluefin:stable
+FROM ghcr.io/ublue-os/bluefin:latest
 ARG KERNEL_VERSION="${KERNEL_VERSION}"
 
 ## Other possible base images include:
@@ -25,18 +25,15 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
+    rpm-ostree install \
+        https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-"$(rpm -E %fedora)".noarch.rpm \
+        https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-"$(rpm -E %fedora)".noarch.rpm && \
+    rpm-ostree install \
+        akmod-wl && \
+    rpm-ostree remove rpmfusion-free-release rpmfusion-nonfree-release && \
     /ctx/build.sh && \
     ostree container commit
-
-    
-# RUN sed -i 's@enabled=0@enabled=1@g' /etc/yum.repos.d/_copr_ublue-os-akmods.repo
-
-# RUN rpm-ostree install kmod-wl
-
-COPY --from=ghcr.io/ublue-os/akmods:main-41-"${KERNEL_VERSION}" /rpms/ /tmp/rpms
-RUN find /tmp/rpms
-RUN rpm-ostree install /tmp/rpms/kmods/*wl*.rpm
-    
+   
 ### LINTING
 ## Verify final image and contents are correct.
 RUN bootc container lint
