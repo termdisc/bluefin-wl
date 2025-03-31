@@ -30,7 +30,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
         https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-"$(rpm -E %fedora)".noarch.rpm && \
     rpm-ostree install \
         akmod-wl && \
-    rpm-ostree remove rpmfusion-free-release rpmfusion-nonfree-release && \
+    rpm-ostree uninstall rpmfusion-free-release rpmfusion-nonfree-release && \
     /ctx/build.sh && \
     ostree container commit
    
