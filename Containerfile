@@ -40,7 +40,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
         NetworkManager-openvpn xdg-user-dirs && \
     systemctl disable gdm || true && \
     systemctl disable sddm || true && \
-    systemctl enable cosmic-greeter
+    systemctl enable cosmic-greeter && \
     /ctx/build.sh && \
     ostree container commit
    
