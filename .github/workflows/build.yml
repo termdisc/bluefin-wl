@@ -4,6 +4,7 @@ on:
   pull_request:
     branches:
       - main
+      - cosmic
   schedule:
     - cron: '05 0 * * 6'  # 10:05am UTC Saturdays
   push:
