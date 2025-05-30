@@ -35,7 +35,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
 
     /ctx/build.sh && \
 
-    depmod -A ${KERNEL_VERSION} && \
+    #depmod -A ${KERNEL_VERSION} && \
     
     ostree container commit
    
