@@ -25,13 +25,18 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
-    rpm-ostree install \
-        https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-"$(rpm -E %fedora)".noarch.rpm \
-        https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-"$(rpm -E %fedora)".noarch.rpm && \
-    rpm-ostree install \
-        akmod-wl && \
-    rpm-ostree uninstall rpmfusion-free-release rpmfusion-nonfree-release && \
+
+    #rpm-ostree install \
+    #    https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-"$(rpm -E %fedora)".noarch.rpm \
+    #    https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-"$(rpm -E %fedora)".noarch.rpm && \
+    #rpm-ostree install \
+    #    akmod-wl && \
+    #rpm-ostree uninstall rpmfusion-free-release rpmfusion-nonfree-release && \
+
     /ctx/build.sh && \
+
+    #depmod -A ${KERNEL_VERSION} && \
+    
     ostree container commit
    
 ### LINTING
