@@ -20,8 +20,6 @@ dnf5 -y install \
 
 dnf5 -y remove rpmfusion-free-release rpmfusion-nonfree-release
 
-depmod -A ${KERNEL_VERSION}
-
 # Use a COPR Example:
 #
 # dnf5 -y copr enable ublue-os/staging
