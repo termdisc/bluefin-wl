@@ -20,7 +20,7 @@ dnf5 -y install \
 
 dnf5 -y remove rpmfusion-free-release rpmfusion-nonfree-release
 
-dracut -f --regenerate-all
+depmod -A
 
 # Use a COPR Example:
 #
