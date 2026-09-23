@@ -2,6 +2,9 @@
 
 set -ouex pipefail
 
+# Copy the contents of system_files/ of the git repo to /
+cp -avf "/ctx/system_files"/. /
+
 ### Install packages
 
 # Packages can be installed from any enabled yum repo on the image.
@@ -11,14 +14,14 @@ set -ouex pipefail
 
 # this installs a package from fedora repos
 # dnf5 install -y tmux 
-# dnf5 -y install \
-#     https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-"$(rpm -E %fedora)".noarch.rpm \
-#     https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-"$(rpm -E %fedora)".noarch.rpm
+dnf5 -y install \
+    https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
+    https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-"$(rpm -E %fedora)".noarch.rpm
     
-# dnf5 -y install \
-#     akmod-wl
+dnf5 -y install \
+    akmod-wl
 
-# dnf5 -y remove rpmfusion-free-release rpmfusion-nonfree-release
+dnf5 -y remove rpmfusion-free-release rpmfusion-nonfree-release
 
 # Use a COPR Example:
 #
