@@ -32,7 +32,14 @@ FROM ghcr.io/ublue-os/bluefin:latest
 #     rpm-ostree uninstall rpmfusion-free-release rpmfusion-nonfree-release && \
 #     /ctx/build.sh && \
 #     ostree container commit
-   
+COPY --from=ghcr.io/ublue-os/akmods:common / /tmp/akmods-common
+RUN find /tmp/akmods-common
+## optionally install remove old and install new kernel
+# dnf -y remove --no-autoremove kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra
+## install ublue support package and desired kmod(s)
+RUN dnf install /tmp/rpms/ublue-os/ublue-os-akmods*.rpm
+RUN dnf install /tmp/rpms/kmods/kmod-wl*.rpm
+
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
